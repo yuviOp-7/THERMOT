@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Threat Detection</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: none;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 0 15px;
+
+        }
+
+
+
+
+
+
+
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+        }
+        .nav-bar{
+            background-color: #1c1c1e;
+        }
+
+        #navbar {
+            position: sticky;
+            top: 0;
+            overflow: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            color: #ffffff;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar .menu a {
+            margin: 0 15px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .navbar .menu a:hover {
+            text-decoration: underline;
+        }
+
+        .results{
+            line-height: 2;
+        }
+
+        .results ul{
+            list-style: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(/static/images/g.webp);
+            background-position: center;
+            object-fit: cover;
+            height: 400px;
+            text-align: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            color: #ccc;
+        }
+
+        /* Form Section */
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 0px;
+            gap: 40px;
+
+        }
+
+        .form-container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 400px;
+        }
+
+        .form-container h2 {
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2c2c2c;
+            color: white;
+        }
+
+        input::placeholder {
+            color: #888;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0px 0px 20px 0px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #1c1c1e;
+            color: #888;
+        }
+
+        .footer a {
+            color: #4caf50;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar" id="navbar">
+        <div class="navbar container">
+            <div class="logo">THERMOT</div>
+            <div class="menu">
+                <a href="#">Home</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Explore Advanced Threat Detection System</h1>
+        <p>Detect and classify IPs, domains, and URLs in real-time with industry-leading tools.</p>
+    </div>
+
+    <!-- Form Section -->
+<div class="form-section">
+    <div class="form-container">
+        <h2>Threat Detection</h2>
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button id="urlTab" onclick="showSection('urlForm')">Check URL</button>
+            <button id="ipTab" onclick="showSection('ipForm')">Check IP Address</button>
+        </div>
+
+        <!-- URL Form -->
+        <div id="urlForm" class="form-content" style="display: block;">
+            <h3>Check a URL</h3>
+            <form method="POST">
+                <label for="url">Enter URL:</label>
+                <input type="text" id="url" name="url" placeholder="E.g., https://example.com">
+                <button type="submit">Check URL Threat</button>
+            </form>
+        </div>
+
+        <!-- IP Form -->
+        <div id="ipForm" class="form-content" style="display: none;">
+            <h3>Check an IP Address</h3>
+            <form method="POST">
+                <label for="ip">Enter IP Address:</label>
+                <input type="text" id="ip" name="ip" placeholder="E.g., 192.168.1.1">
+                <button type="submit">Check IP Threat</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        document.getElementById('urlForm').style.display = 'none';
+        document.getElementById('ipForm').style.display = 'none';
+
+        // Show the selected section
+        document.getElementById(sectionId).style.display = 'block';
+
+        // Update active tab styles
+        document.getElementById('urlTab').classList.remove('active');
+        document.getElementById('ipTab').classList.remove('active');
+        document.getElementById(sectionId === 'urlForm' ? 'urlTab' : 'ipTab').classList.add('active');
+    }
+        </script>
+
+        <style>
+            .tabs {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            .tabs button {
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                margin: 0 10px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+            .tabs button.active {
+                background-color: #45a049;
+                font-weight: bold;
+            }
+
+            .tabs button:hover {
+                background-color: #3e8e41;
+            }
+
+            .form-content {
+                text-align: center;
+            }
+        </style>
+
+
+            {% if result %}
+            <div class="results">
+                <h2>Detection Results</h2>
+                <ul>
+                    {% for tool, data in result.items() %}
+                    <li><strong>{{ tool }}:</strong> {{ data }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <section class="about" id="about">
+        <div class="aboutmain">
+            <div class="about-text">
+                <h1>About</h1>
+                <p>
+                    Welcome to <strong> Threat Detection System</strong>, your trusted platform for advanced threat analysis and real-time detection of malicious entities. 
+                    Our tool integrates cutting-edge APIs, including AbuseIPDB, VirusTotal, and Google Safe Browsing, to ensure a comprehensive evaluation of IPs, domains, and URLs.
+                </p>
+                <p>
+                    Our mission is to empower individuals and organizations with reliable cybersecurity solutions. 
+                    By leveraging industry-leading tools, we aim to provide actionable insights that enhance your digital safety and protect against potential cyber threats.
+                </p>
+
+            </div>
+        </div>
+
+    </section>
+
+    <section class="Contact" id="contact">
+        <div class="contactmain">
+            <div class="about-text">
+                <h1>Contact Us</h1> 
+                <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <input type="hidden" name="access_key" value="62a6c8b7-5dda-4c25-8058-8a8203413519">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone No.:</label>
+                        <input type="number" id="number" name="number" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message:</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Enter your message" required></textarea>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <style>
+                /* About Section */
+                .about {
+                    padding: 50px;
+                    background-color: #1e1e1e;
+                    color: white;
+                    text-align: center;
+                }
+            
+                .about-text h1 {
+                    font-size: 2.5rem;
+                    margin-bottom: 20px;
+                    color: #4caf50;
+                }
+            
+                .about-text p {
+                    font-size: 1.1rem;
+                    line-height: 1.8;
+                    color: #cccccc;
+                    max-width: 800px;
+                    margin: auto;
+                }
+            
+                /* Contact Section */
+                .contact {
+                    padding: 50px;
+                    background-color: #121212;
+                    color: white;
+                    text-align: center;
+                }
+            
+                .contact h1 {
+                    font-size: 2.5rem;
+                    margin-bottom: 20px;
+                    color: #4caf50;
+                }
+            
+                .contact-form {
+                    max-width: 500px;
+                    margin: auto;
+                    background-color: #1e1e1e;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+                }
+            
+                .form-group {
+                    margin-bottom: 20px;
+                    text-align: left;
+                }
+            
+                .form-group label {
+                    display: block;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    color: #4caf50;
+                }
+            
+                .form-group input,
+                .form-group textarea {
+                    width: 100%;
+                    padding: 10px;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: #2c2c2c;
+                    color: white;
+                }
+            
+                .form-group input::placeholder,
+                .form-group textarea::placeholder {
+                    color: #888;
+                }
+            
+                button {
+                    width: 100%;
+                    padding: 10px;
+                    background-color: #4caf50;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                }
+            
+                button:hover {
+                    background-color: #45a049;
+                }
+            </style>
+
+    </section>
+
+
+
+
+    <!-- Footer -->
+    <div class="footer">
+        Powered by Threat Detection | <a href="#">Privacy Policy</a>
+    </div>
+</body>
+
+</html>
